@@ -253,6 +253,37 @@ declare namespace jest {
         toHaveClass(...classNames: string[]): R;
         /**
          * @description
+         * Check whether the given element has a description or not.
+         *
+         * An element gets its description via the
+[`aria-describedby` attribute](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques/Using_the_aria-describedby_attribute).
+         * Set this to the `id` of one or more other elements. These elements may be nested inside,
+         * be outside, or a sibling of the passed in element.
+         * @example
+         * <div>
+         *   <input type="text" data-testid="element-to-focus" />
+         * </div>
+         * <button aria-label="Close" aria-describedby="description-close">
+         *   X
+         * </button>
+         * <div id="description-close">
+         *   Closing will discard any changes
+         * </div>
+         *
+         * <button>Delete</button>
+         *
+         *
+         * const closeButton = getByRole('button', {name: 'Close'})
+         * expect(closeButton).toHaveDescription('Closing will discard any changes')
+         * expect(closeButton).toHaveDescription(/will discard/) // to partially match
+         * expect(closeButton).toHaveDescription(expect.stringContaining('will discard'))
+         * expect(closeButton).not.toHaveDescription('Other description')
+         * @see
+         * [testing-library/jest-dom#tohavedescription](https://github.com/testing-library/jest-dom#tohavedescription)
+         */
+        toHaveDescription(value?: string | RegExp): R;
+        /**
+         * @description
          * Assert whether an element has focus or not.
          * @example
          * <div>
